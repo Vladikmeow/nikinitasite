@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Демонстрационный сайт заказа такси с учебной интеграцией Google Analytics 4.">
+  <title>Такси Go — поездка за пару минут</title>
+  <link rel="stylesheet" href="styles.css">
+  <!--
+    Google Analytics 4 подключается из script.js после согласия пользователя.
+    Перед демонстрацией замените G-XXXXXXXXXX на ваш Measurement ID.
+  -->
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="Такси Go — главная"><span class="brand-mark">G</span> такси<span class="brand-dot">go</span></a>
+    <nav aria-label="Главная навигация">
+      <a href="#how">Как это работает</a>
+      <a href="#tariffs">Тарифы</a>
+      <a href="#order">Заказать</a>
+    </nav>
+    <a class="phone" href="tel:+78005553535">8 800 555-35-35</a>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-copy">
+        <div class="eyebrow"><span class="status-dot"></span> Городские поездки без лишних ожиданий</div>
+        <h1>Ваш город.<br><span>Ваш маршрут.</span><br>Ваше такси.</h1>
+        <p>Укажите маршрут, выберите тариф — и узнайте примерную стоимость поездки. Это демонстрационный макет: настоящий автомобиль не вызывается.</p>
+        <a class="button button-dark" href="#order" id="heroOrderButton">Рассчитать поездку <span aria-hidden="true">↗</span></a>
+        <div class="hero-stats">
+          <div><strong>5 мин</strong><span>средняя подача*</span></div>
+          <div><strong>24/7</strong><span>заказ онлайн*</span></div>
+          <div><strong>3 тарифа</strong><span>на выбор</span></div>
+        </div>
+        <small class="disclaimer">*Демонстрационные значения, не являются реальными обещаниями сервиса.</small>
+      </div>
+      <div class="hero-art" aria-label="Иллюстрация автомобиля такси">
+        <div class="sun"></div><div class="city city-back"></div><div class="city city-front"></div>
+        <div class="road"><span></span><span></span><span></span></div>
+        <div class="floating-card"><span class="mini-pin">↗</span><div><b>Маршрут построен</b><small>Можно отправляться</small></div></div>
+        <svg class="car" viewBox="0 0 600 290" role="img" aria-label="Жёлтый городской автомобиль">
+          <ellipse cx="300" cy="248" rx="240" ry="23" fill="#17251f" opacity=".15"/>
+          <path d="M105 190 L132 132 Q145 105 187 99 L360 99 Q389 101 414 129 L461 174 L500 188 Q520 196 520 219 L520 232 L77 232 L77 211 Q77 193 105 190Z" fill="#f8c844" stroke="#1c2923" stroke-width="7" stroke-linejoin="round"/>
+          <path d="M154 132 Q165 113 190 111 L265 111 L265 163 L133 163Z" fill="#c8e5e4" stroke="#1c2923" stroke-width="6" stroke-linejoin="round"/>
+          <path d="M280 111 L357 111 Q378 112 397 136 L420 163 L280 163Z" fill="#c8e5e4" stroke="#1c2923" stroke-width="6" stroke-linejoin="round"/>
+          <path d="M273 107 L273 166" stroke="#1c2923" stroke-width="6"/>
+          <path d="M80 199 L124 194 L133 211 L80 211Z" fill="#fff4c5" stroke="#1c2923" stroke-width="5"/>
+          <path d="M466 188 L500 198 L500 211 L463 211Z" fill="#ed755b" stroke="#1c2923" stroke-width="5"/>
+          <rect x="238" y="72" width="91" height="29" rx="7" fill="#f8c844" stroke="#1c2923" stroke-width="6"/>
+          <text x="283" y="92" text-anchor="middle" font-size="16" font-weight="900" fill="#1c2923">TAXI</text>
+          <circle cx="165" cy="228" r="37" fill="#1c2923"/><circle cx="165" cy="228" r="19" fill="#dbe0d7"/><circle cx="165" cy="228" r="7" fill="#1c2923"/>
+          <circle cx="432" cy="228" r="37" fill="#1c2923"/><circle cx="432" cy="228" r="19" fill="#dbe0d7"/><circle cx="432" cy="228" r="7" fill="#1c2923"/>
+          <path d="M287 179 L287 205" stroke="#1c2923" stroke-width="5"/><circle cx="287" cy="217" r="5" fill="#1c2923"/>
+        </svg>
+        <div class="art-label"><span>GO</span> Поехали?</div>
+      </div>
+    </section>
+
+    <section class="booking section" id="order">
+      <div class="section-heading">
+        <div><span class="eyebrow">Быстрый заказ</span><h2>Куда едем?</h2></div>
+        <p>Заполните поля и нажмите «Рассчитать». Заказ существует только в демонстрации.</p>
+      </div>
+      <form id="rideForm" class="booking-card">
+        <div class="route-fields">
+          <label>Откуда
+            <span class="input-wrap"><span class="input-icon origin">●</span><input id="fromAddress" name="from" type="text" placeholder="Например, Центральный вокзал" required maxlength="120"></span>
+          </label>
+          <div class="route-line" aria-hidden="true"></div>
+          <label>Куда
+            <span class="input-wrap"><span class="input-icon destination">◆</span><input id="toAddress" name="to" type="text" placeholder="Например, Городской парк" required maxlength="120"></span>
+          </label>
+        </div>
+        <div class="booking-options">
+          <label>Тариф
+            <select id="tariff" name="tariff">
+              <option value="Эконом" data-rate="22" data-base="100">Эконом — от 100 ₽</option>
+              <option value="Комфорт" data-rate="30" data-base="150">Комфорт — от 150 ₽</option>
+              <option value="Бизнес" data-rate="48" data-base="250">Бизнес — от 250 ₽</option>
+            </select>
+          </label>
+          <label>Расстояние, км
+            <input id="distance" name="distance" type="number" min="1" max="100" step="1" value="5" required>
+          </label>
+          <button class="button button-yellow" type="submit">Рассчитать цену <span aria-hidden="true">→</span></button>
+        </div>
+        <div id="estimate" class="estimate" aria-live="polite">
+          <div><span>Предварительная стоимость</span><strong id="price">— ₽</strong></div>
+          <p id="estimateHint">Стоимость появится после расчёта маршрута.</p>
+          <button class="button button-dark" type="button" id="orderButton" disabled>Подтвердить демо-заказ</button>
+        </div>
+        <p class="privacy-note">Не вводите реальные персональные данные. Адреса маршрута используются только в браузере и не отправляются в Google Analytics.</p>
+      </form>
+    </section>
+
+    <section class="tariffs section" id="tariffs">
+      <div class="section-heading"><div><span class="eyebrow">Выберите свой комфорт</span><h2>Тарифы для каждой поездки</h2></div></div>
+      <div class="tariff-grid">
+        <button class="tariff-card selected" data-tariff="Эконом" type="button"><span class="tariff-icon">↗</span><span class="tariff-name">Эконом</span><strong>от 100 ₽</strong><small>Практично на каждый день</small><span class="tariff-select">Выбрать тариф</span></button>
+        <button class="tariff-card" data-tariff="Комфорт" type="button"><span class="tariff-icon">✦</span><span class="tariff-name">Комфорт</span><strong>от 150 ₽</strong><small>Больше пространства</small><span class="tariff-select">Выбрать тариф</span></button>
+        <button class="tariff-card" data-tariff="Бизнес" type="button"><span class="tariff-icon">◆</span><span class="tariff-name">Бизнес</span><strong>от 250 ₽</strong><small>Для особых случаев</small><span class="tariff-select">Выбрать тариф</span></button>
+      </div>
+    </section>
+
+    <section class="how section" id="how">
+      <div class="section-heading"><div><span class="eyebrow">Всего три шага</span><h2>Просто. Быстро. Удобно.</h2></div></div>
+      <div class="steps">
+        <article><span>01</span><h3>Укажите маршрут</h3><p>Введите начальную и конечную точки поездки.</p></article>
+        <article><span>02</span><h3>Выберите тариф</h3><p>Посмотрите предварительную стоимость поездки.</p></article>
+        <article><span>03</span><h3>Подтвердите заказ</h3><p>Увидите подтверждение тестового заказа прямо на странице.</p></article>
+      </div>
+    </section>
+  </main>
+
+  <footer><a class="brand" href="#"><span class="brand-mark">G</span> такси<span class="brand-dot">go</span></a><span> HTML, CSS, JavaScript и GA4</span><a href="#order">Рассчитать поездку ↑</a></footer>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <aside id="consentBanner" class="consent-banner" aria-label="Настройки аналитики" hidden>
+    <div><strong>Помогите улучшить сервис</strong><p>Разрешить Google Analytics собирать статистику посещений и взаимодействий? Адреса поездок в аналитику не передаются.</p></div>
+    <div class="consent-actions"><button id="acceptAnalytics" class="button button-dark" type="button">Разрешить</button><button id="rejectAnalytics" class="button button-light" type="button">Не сейчас</button></div>
+  </aside>
+  <script src="script.js"></script>
+</body>
+</html>
