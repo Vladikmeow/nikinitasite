@@ -2,7 +2,7 @@
 // 1. Создайте ресурс GA4 и веб-поток.
 // 2. Замените значение ниже на Measurement ID вида G-XXXXXXXXXX.
 // 3. Для демонстрации аналитика запускается только после согласия пользователя.
-const GA_MEASUREMENT_ID = "G-XXXXXXXXXX";
+const GA_MEASUREMENT_ID = "G-TX3DPNKSF9";
 
 let analyticsInitialized = false;
 const consentBanner = document.getElementById("consentBanner");
